@@ -122,35 +122,7 @@ End Sub
 
 
 
-Private Sub chkApplyFilter_Click()
-
-End Sub
-
 Private Sub Label1_Click()
-
-End Sub
-
-Private Sub Label5_Click()
-
-End Sub
-
-Private Sub Label9_Click()
-
-End Sub
-
-Private Sub txtDatabaseName_Change()
-
-End Sub
-
-Private Sub txtFilterColumn_Change()
-
-End Sub
-
-Private Sub txtFilterValue_Change()
-
-End Sub
-
-Private Sub txtMaxRows_Change()
 
 End Sub
 
@@ -158,13 +130,6 @@ Private Sub txtServerName_Change()
 
 End Sub
 
-Private Sub txtTableName_Change()
-
-End Sub
-
-Private Sub UserForm_Click()
-
-End Sub
 Private Sub UserForm_Initialize()
     ' Check if "Settings" sheet exists, if not create and hide it
     Dim wsSettings As Worksheet
@@ -188,6 +153,7 @@ Private Sub UserForm_Initialize()
         txtFilterColumn.Value = .Cells(1, 6).Value
         txtFilterValue.Value = .Cells(1, 7).Value
         chkApplyFilter.Value = .Cells(1, 8).Value
+        txtDatabaseName.Value = .Cells(1, 9).Value
     End With
 End Sub
 
@@ -205,6 +171,7 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
         .Cells(1, 6).Value = txtFilterColumn.Value
         .Cells(1, 7).Value = txtFilterValue.Value
         .Cells(1, 8).Value = chkApplyFilter.Value
+        .Cells(1, 9).Value = txtDatabaseName.Value
     End With
 End Sub
 

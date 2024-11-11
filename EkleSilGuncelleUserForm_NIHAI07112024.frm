@@ -60,7 +60,7 @@ Private Sub btnAdd_Click()
     ' ADODB baðlantýsýný baþlat
     Set conn = CreateObject("ADODB.Connection")
     On Error GoTo ConnectionError
-    Set conn.ConnectionTimeout = 5
+     conn.ConnectionTimeout = 5
     conn.Open strConn
     On Error GoTo 0
 
@@ -143,7 +143,7 @@ Private Sub btnAdd_Click()
 ConnectionError:
     MsgBox "Veritabanýna baðlanýrken bir hata oluþtu: " & Err.Description
     If Not conn Is Nothing Then
-        conn.Close
+    conn.Close
     Set conn = Nothing
     End If
 End Sub
@@ -188,8 +188,7 @@ Private Sub btnDelete_Click()
 
     ' ADODB baðlantýsýný baþlat
     Set conn = CreateObject("ADODB.Connection")
-    On Error GoTo ConnectionError
-    Set conn.ConnectionTimeout = 5
+     On Error GoTo ConnectionError
     conn.Open strConn
     On Error GoTo 0
 
@@ -282,7 +281,8 @@ End If
     Set conn = CreateObject("ADODB.Connection")
     
     On Error GoTo ConnectionError
-    Set conn.ConnectionTimeout = 5
+    conn.ConnectionTimeout = 5
+    
     conn.Open strConn
     On Error GoTo 0
 
@@ -319,14 +319,6 @@ BackupError:
     End If
 End Sub
 
-
-Private Sub Label10_Click()
-
-End Sub
-
-Private Sub Label2_Click()
-
-End Sub
 
 Private Sub topluGuncelle_Click()
     ' Retrieve server and database details from UserForm
@@ -374,7 +366,8 @@ Private Sub topluGuncelle_Click()
     ' Initialize ADODB connection
     Set conn = CreateObject("ADODB.Connection")
     
-    On Error GoTo ConnectionError
+     On Error GoTo ConnectionError
+     conn.ConnectionTimeout = 5
     conn.Open strConn
     On Error GoTo 0
 
@@ -487,7 +480,7 @@ ConnectionError:
     MsgBox "Veritabanýna baðlanýrken bir hata oluþtu: " & Err.Description
     If Not conn Is Nothing Then
     conn.Close
-    Set conn = Nothing ' END IFIYOK
+    Set conn = Nothing
     End If
 End Sub
 
@@ -547,29 +540,10 @@ End Sub
 
 
 
-Private Sub Label8_Click()
-
-End Sub
-
-Private Sub txtDatabaseName_Change()
-
-End Sub
-
-Private Sub txtPrimaryKey_Change()
-
-End Sub
-
 Private Sub txtServerName_Change()
 
 End Sub
 
-Private Sub txtTableName_Change()
-
-End Sub
-
-Private Sub UserForm_Click()
-
-End Sub
 Private Sub UserForm_Initialize()
     ' Load saved values into text boxes
     Dim ws As Worksheet
@@ -585,8 +559,8 @@ Private Sub UserForm_Initialize()
 
     ' Load values from the hidden worksheet into text boxes
     txtTableName.Text = ws.Range("A5").Value
-    txtDatabaseName.Text = ws.Range("A2").Value
-    ServerGiris.txtServer.Text = ws.Range("A3").Value
+    txtDatabaseName.Text = ws.Range("A9").Value
+    ' ServerGiris.txtServer.Text = ws.Range("A3").Value
     txtPrimaryKey.Text = ws.Range("A4").Value
      
 End Sub
@@ -597,8 +571,8 @@ Private Sub UserForm_Terminate()
     Set ws = ThisWorkbook.Worksheets("Settings")
 
     ws.Range("A5").Value = txtTableName.Text
-    ws.Range("A2").Value = txtDatabaseName.Text
-     ws.Range("A3").Value = ServerGiris.txtServer.Text
+    ws.Range("A9").Value = txtDatabaseName.Text
+     ' ws.Range("A3").Value = ServerGiris.txtServer.Text
     ws.Range("A4").Value = txtPrimaryKey.Text
     
 End Sub

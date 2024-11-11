@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ServerGiris 
    Caption         =   "UserForm2"
-   ClientHeight    =   4800
+   ClientHeight    =   4125
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   9465.001
+   ClientWidth     =   9105.001
    OleObjectBlob   =   "ServerGiris_NIHAI07112024.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -71,7 +71,6 @@ Private Sub btnConnect_Click()
     ' Attempt connection
     On Error Resume Next
     Set conn = New ADODB.Connection
-    Set conn.ConnectionTimeout = 5
     conn.Open strConn
     On Error GoTo 0
     
@@ -106,7 +105,7 @@ Private Sub btnConnectTopla_Click()
     ' Attempt connection
     On Error Resume Next
     Set conn = New ADODB.Connection
-    Set conn.ConnectionTimeout = 1
+    Set conn.ConnectionTimeout = 10
     conn.Open strConn
     On Error GoTo 0
     
@@ -124,11 +123,7 @@ Private Sub btnConnectTopla_Click()
     End If
 End Sub
 
-Private Sub Label1_Click()
-
-End Sub
-
-Private Sub txtPassword_Change()
+Private Sub CheckBox1_Click()
 
 End Sub
 
@@ -136,11 +131,49 @@ Private Sub txtServer_Change()
 
 End Sub
 
-Private Sub txtUsername_Change()
+Private Sub UserForm_Initialize()
+    ' Check if "Settings" sheet exists, if not create and hide it
+    Dim wsSettings As Worksheet
+    On Error Resume Next
+    Set wsSettings = ThisWorkbook.Sheets("Settings")
+    On Error GoTo 0
 
+    If wsSettings Is Nothing Then
+        Set wsSettings = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.Count))
+        wsSettings.Name = "Settings"
+        wsSettings.Visible = xlSheetVeryHidden
+    End If
+
+    ' Load saved values from Settings sheet
+    With wsSettings
+         ServerGiris.txtServer.Value = .Cells(1, 8).Value
+        ' txtDatabase.Value = .Cells(1, 2).Value
+        ServerGiris.txtUsername.Value = .Cells(1, 10).Value
+        ServerGiris.txtPassword.Value = .Cells(1, 11).Value
+        ServerGiris.CheckBox1.Value = .Cells(1, 12).Value
+       
+       
+    End With
 End Sub
 
+Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
+    ' Save current values to Settings sheet before closing
+    Dim wsSettings As Worksheet
+    Set wsSettings = ThisWorkbook.Sheets("Settings")
 
-Private Sub UserForm_Click()
-
+    With wsSettings
+       
+       If ServerGiris.CheckBox1.Value = True Then
+            .Cells(1, 10).Value = ServerGiris.txtUsername.Value
+            .Cells(1, 11).Value = ServerGiris.txtPassword.Value
+            .Cells(1, 8).Value = ServerGiris.txtServer.Value
+         Else
+            ' Clear saved Username and Password if checkbox is not selected
+            .Cells(1, 8).ClearContents
+            .Cells(1, 10).ClearContents
+            .Cells(1, 11).ClearContents
+        End If
+        
+    End With
 End Sub
+
